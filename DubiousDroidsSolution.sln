@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DubiousDroids", "DubiousDroids\DubiousDroids.csproj", "{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DubiousDroidsClassLibrary", "DubiousDroidsClassLibrary\DubiousDroidsClassLibrary.csproj", "{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {986926AB-5671-4C56-A9C0-011B69A10758}
+	EndGlobalSection
+EndGlobal

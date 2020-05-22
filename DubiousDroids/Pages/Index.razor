@@ -1,0 +1,9 @@
+﻿@page "/"
+
+@inject DubiousDroidsClassLibrary.Overhead.Interfaces.IGameState GameState
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<CommandConsole GS="@GameState"></CommandConsole>

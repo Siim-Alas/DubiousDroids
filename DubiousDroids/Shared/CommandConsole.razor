@@ -1,0 +1,26 @@
+﻿
+<div class="bg-dark">
+    <h3>CommandConsole</h3>
+    <p class="console-log">@Text</p>
+
+    <input type="text" @bind="CurrentLine" @bind:event="oninput" @onkeypress="OnKeyPress" />
+</div>
+
+@code {
+    private string Text { get; set; }
+    private string CurrentLine { get; set; }
+
+    [Parameter]
+    public DubiousDroidsClassLibrary.Overhead.Interfaces.IGameState GS { get; set; }
+
+    private void OnKeyPress(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            GS.InputManager.ParseTextInput(CurrentLine);
+
+            Text += $"\n{CurrentLine}";
+            CurrentLine = "";
+        }
+    }
+}
