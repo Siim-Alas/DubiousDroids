@@ -11,7 +11,8 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
     {
         public void OnInputParsed(object source, InputParsedEventArgs args)
         {
-            Console.WriteLine(string.Join('-', args.Instructions));
+            Console.WriteLine("event received by readystate");
+            Console.WriteLine($"{args.CommandTarget}, {args.Instructions}, {args.Argument}");
         }
     }
 }

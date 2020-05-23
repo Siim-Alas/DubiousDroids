@@ -11,8 +11,25 @@ namespace DubiousDroidsClassLibrary.IO
 
         public void ParseTextInput(string input)
         {
-            string[] inputArray = input.Split(' ');
-            InputParsed(this, new InputParsedEventArgs() { Instructions = inputArray });
+            try
+            {
+                string[] inputArray = input.Split(' ');
+
+                if (Enum.TryParse(inputArray[1], out InputParsedEventArgs.InstructionsEnum instructions))
+                {
+                    if (Enum.IsDefined(typeof(InputParsedEventArgs.InstructionsEnum), instructions))
+                    {
+                        int commandTarget = Convert.ToInt32(inputArray[0]);
+                        int argument = Convert.ToInt32(inputArray[2]);
+
+                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, argument));
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }
