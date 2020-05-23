@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DubiousDroidsClassLibrary.IO.Interfaces
 {
-    public delegate void InputParsedEventHandler(object source, EventArgs args);
+    public delegate void InputParsedEventHandler(object source, InputParsedEventArgs args);
     public interface IManageInput
     {
         event InputParsedEventHandler InputParsed;

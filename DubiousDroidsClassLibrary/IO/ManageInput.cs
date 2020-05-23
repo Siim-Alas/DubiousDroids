@@ -9,14 +9,10 @@ namespace DubiousDroidsClassLibrary.IO
     {
         public event InputParsedEventHandler InputParsed;
 
-        public ManageInput()
-        {
-
-        }
-
         public void ParseTextInput(string input)
         {
-            InputParsed(this, EventArgs.Empty);
+            string[] inputArray = input.Split(' ');
+            InputParsed(this, new InputParsedEventArgs() { Instructions = inputArray });
         }
     }
 }
