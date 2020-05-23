@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DubiousDroidsClassLibrary.Objects.Droid.Interfaces
 {
-    public interface IDroidState
+    public interface IDroidGroup
     {
-        int[] Position { get; }
-        void ReceiveCommand(InputParsedEventArgs args);
+        IDroidState[] Droids { get; }
+        void OnInputParsed(object source, InputParsedEventArgs args);
     }
 }

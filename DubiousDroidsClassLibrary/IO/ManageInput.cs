@@ -20,9 +20,8 @@ namespace DubiousDroidsClassLibrary.IO
                     if (Enum.IsDefined(typeof(InputParsedEventArgs.InstructionsEnum), instructions))
                     {
                         int commandTarget = Convert.ToInt32(inputArray[0]);
-                        int argument = Convert.ToInt32(inputArray[2]);
 
-                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, argument));
+                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, inputArray[2]));
                     }
                 }
             }

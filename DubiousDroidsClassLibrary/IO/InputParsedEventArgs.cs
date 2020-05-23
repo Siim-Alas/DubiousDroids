@@ -6,7 +6,7 @@ namespace DubiousDroidsClassLibrary.IO
 {
     public class InputParsedEventArgs : EventArgs
     {
-        public InputParsedEventArgs(int commandTarget, InstructionsEnum instructions, int argument)
+        public InputParsedEventArgs(int commandTarget, InstructionsEnum instructions, string argument)
         {
             CommandTarget = commandTarget;
             Instructions = instructions;
@@ -16,9 +16,10 @@ namespace DubiousDroidsClassLibrary.IO
         public enum InstructionsEnum
         {
             peek,
+            turn,
             move
         }
-        public InstructionsEnum Instructions { get; set; }
-        public int Argument { get; set; }
+        public InstructionsEnum Instructions { get; private set; }
+        public string Argument { get; private set; }
     }
 }
