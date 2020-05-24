@@ -10,6 +10,5 @@ namespace DubiousDroidsClassLibrary.Objects.Droid.Interfaces
     {
         IDroidState[] Droids { get; }
         void OnInputParsed(object source, InputParsedEventArgs args);
-        void OnMoveReviewed(object source, MoveReviewedEventArgs args);
     }
 }

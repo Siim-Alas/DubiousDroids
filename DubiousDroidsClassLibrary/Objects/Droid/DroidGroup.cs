@@ -1,6 +1,7 @@
 ﻿using DubiousDroidsClassLibrary.IO;
 using DubiousDroidsClassLibrary.Objects.Droid.Interfaces;
 using DubiousDroidsClassLibrary.Objects.Tile;
+using DubiousDroidsClassLibrary.Objects.Tile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,18 +22,6 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
             try
             {
                 Droids[args.CommandTarget].ReceiveCommand(args);
-            }
-            catch
-            {
-
-            }
-        }
-
-        public void OnMoveReviewed(object source, MoveReviewedEventArgs args)
-        {
-            try
-            {
-                Droids[args.CommandTarget].Move(args);
             }
             catch
             {

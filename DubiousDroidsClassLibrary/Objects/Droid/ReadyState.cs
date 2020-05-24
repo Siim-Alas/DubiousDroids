@@ -1,6 +1,7 @@
 ﻿using DubiousDroidsClassLibrary.IO;
 using DubiousDroidsClassLibrary.Objects.Droid.Interfaces;
 using DubiousDroidsClassLibrary.Objects.Tile;
+using DubiousDroidsClassLibrary.Objects.Tile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +12,22 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
 {
     public class ReadyState : IDroidState
     {
-        public ReadyState()
+        private readonly ITileSet _tileSet;
+        public ReadyState(ITileSet tileSet, int[] position, int[] directionVector)
         {
-            Position = new int[] { 0, 0 };
-            DirectionVector = new int[] { 1, 0 };
-        }
-        public ReadyState(int[] position, int[] directionVector)
-        {
+            _tileSet = tileSet;
             Position = position;
             DirectionVector = directionVector;
         }
 
         public event DroidReportStatusEventHandler DroidReportedStatus;
-        public event MoveSubmittedEventHandler DroidSubmittedMove;
 
         public int[] Position { get; private set; }
         public int[] DirectionVector { get; private set; }
 
         public void ReceiveCommand(InputParsedEventArgs args)
         {
+            Console.WriteLine($"{args.CommandTarget} received instruction \"{args.Instructions}\" with argument \"{args.Argument}\"");
             switch (args.Instructions)
             {
                 case InputParsedEventArgs.InstructionsEnum.peek:
@@ -74,19 +72,13 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         amount = 1;
                     }
-                    DroidSubmittedMove(this, new MoveSubmittedEventArgs(args.CommandTarget, Position, new int[] {
-                        amount * DirectionVector[0],
-                        amount * DirectionVector[1]
-                    }));
+
+                    Position = _tileSet.RequestMove(Position, new int[] { amount * DirectionVector[0], amount * DirectionVector[1] });
+
                     break;
                 default:
                     break;
             }
-        }
-
-        public void Move(MoveReviewedEventArgs args)
-        {
-            Position = args.NewPosition;
         }
     }
 }
