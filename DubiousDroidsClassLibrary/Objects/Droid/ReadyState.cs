@@ -3,6 +3,7 @@ using DubiousDroidsClassLibrary.Objects.Droid.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace DubiousDroidsClassLibrary.Objects.Droid
@@ -12,80 +13,67 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
         public ReadyState()
         {
             Position = new int[] { 0, 0 };
-            Angle = 0;
+            DirectionVector = new int[] { 1, 0 };
         }
-        public ReadyState(int[] position, int angle)
+        public ReadyState(int[] position, int[] directionVector)
         {
             Position = position;
-            Angle = angle;
+            DirectionVector = directionVector;
         }
 
+        public event DroidReportStatusEventHandler DroidReportedStatus;
+
         public int[] Position { get; private set; }
-        public int Angle { get; private set; }
+        public int[] DirectionVector { get; private set; }
 
         public void ReceiveCommand(InputParsedEventArgs args)
         {
             switch (args.Instructions)
             {
                 case InputParsedEventArgs.InstructionsEnum.peek:
-                    Console.WriteLine($"Angle = {Angle}; Position = {string.Join(", ", Position)}");
+                    DroidReportStatusEventArgs.DirectionEnum direction;
+
+                    if (DirectionVector[0] == 0)
+                    {
+                        direction = (DirectionVector[1] == 1) ? DroidReportStatusEventArgs.DirectionEnum.S : DroidReportStatusEventArgs.DirectionEnum.N;
+                    }
+                    else
+                    {
+                        direction = (DirectionVector[0] == 1) ? DroidReportStatusEventArgs.DirectionEnum.E : DroidReportStatusEventArgs.DirectionEnum.W;
+                    }
+
+                    DroidReportedStatus(this, new DroidReportStatusEventArgs(args.CommandTarget, Position, direction));
                     break;
                 case InputParsedEventArgs.InstructionsEnum.turn:
                     if (args.Argument == "right")
                     {
-                        Angle += 1;
+                        // x cos(pi/2) - y sin(pi/2) = 0 - y
+                        // x sin(pi/2) + y cos(pi/2) = x + 0
+                        int previousX = DirectionVector[0];
+                        DirectionVector[0] = -1 * DirectionVector[1];
+                        DirectionVector[1] = previousX;
                     }
                     else if (args.Argument == "left")
                     {
-                        Angle -= 1;
+                        // x cos(-pi/2) - y sin(-pi/2) = 0 - (-y)
+                        // x sin(-pi/2) + y cos(-pi/2) = -x + 0
+                        int previousX = DirectionVector[0];
+                        DirectionVector[0] = DirectionVector[1];
+                        DirectionVector[1] = -1 * previousX;
                     }
                     break;
                 case InputParsedEventArgs.InstructionsEnum.move:
-
-                    if (Angle % 4 >= 0)
+                    int amount;
+                    try
                     {
-                        if (Angle % 2 == 0)
-                        {
-                            if (Angle % 4 == 0)
-                            {
-                                Console.WriteLine("North");
-                            }
-                            else
-                            {
-                                Console.WriteLine("South");
-                            }
-                        }
-                        else
-                        {
-                            if (Angle % 4 == 1)
-                            {
-                                Console.WriteLine("East");
-                            }
-                            else
-                            {
-                                Console.WriteLine("West");
-                            }
-                        }
+                        amount = Convert.ToInt32(args.Argument);
                     }
-                    else
+                    catch
                     {
-                        if (Angle % 2 == 0)
-                        {
-                            Console.WriteLine("South");
-                        }
-                        else
-                        {
-                            if (Angle % 4 == -3)
-                            {
-                                Console.WriteLine("East");
-                            }
-                            else
-                            {
-                                Console.WriteLine("West");
-                            }
-                        }
+                        amount = 1;
                     }
-
+                    Position[0] += amount * DirectionVector[0];
+                    Position[1] += amount * DirectionVector[1];
                     break;
                 default:
                     break;

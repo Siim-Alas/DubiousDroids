@@ -12,7 +12,8 @@ namespace DubiousDroidsClassLibrary.IO
             Instructions = instructions;
             Argument = argument;
         }
-        public int CommandTarget { get; set; }
+
+        public int CommandTarget { get; private set; }
         public enum InstructionsEnum
         {
             peek,

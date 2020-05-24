@@ -21,7 +21,7 @@ namespace DubiousDroidsClassLibrary.IO
                     {
                         int commandTarget = Convert.ToInt32(inputArray[0]);
 
-                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, inputArray[2]));
+                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, (inputArray.Length > 2) ? inputArray[2] : ""));
                     }
                 }
             }

@@ -14,18 +14,22 @@ namespace DubiousDroidsClassLibrary.Overhead
     {
         public IManageInput InputManager { get; private set; }
         public IManageOutput OutputManager { get; private set; }
-        public IDroidGroup Droids { get; private set; }
+        public IDroidGroup DroidGroup { get; private set; }
 
         public GameState()
         {
             InputManager = new ManageInput();
             OutputManager = new ManageOutput();
 
-            Droids = new DroidGroup(new IDroidState[] { 
+            DroidGroup = new DroidGroup(new IDroidState[] { 
                 new ReadyState()
             });
 
-            InputManager.InputParsed += Droids.OnInputParsed;
+            InputManager.InputParsed += DroidGroup.OnInputParsed;
+            foreach (IDroidState droid in DroidGroup.Droids)
+            {
+                droid.DroidReportedStatus += OutputManager.OnDroidReportedStatus;
+            }
         }
     }
 }
