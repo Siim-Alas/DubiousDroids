@@ -1,5 +1,6 @@
 ﻿using DubiousDroidsClassLibrary.IO;
 using DubiousDroidsClassLibrary.Objects.Droid.Interfaces;
+using DubiousDroidsClassLibrary.Objects.Tile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
         }
 
         public event DroidReportStatusEventHandler DroidReportedStatus;
+        public event MoveSubmittedEventHandler DroidSubmittedMove;
 
         public int[] Position { get; private set; }
         public int[] DirectionVector { get; private set; }
@@ -68,16 +70,23 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         amount = Convert.ToInt32(args.Argument);
                     }
-                    catch
+                    catch (FormatException)
                     {
                         amount = 1;
                     }
-                    Position[0] += amount * DirectionVector[0];
-                    Position[1] += amount * DirectionVector[1];
+                    DroidSubmittedMove(this, new MoveSubmittedEventArgs(args.CommandTarget, Position, new int[] {
+                        amount * DirectionVector[0],
+                        amount * DirectionVector[1]
+                    }));
                     break;
                 default:
                     break;
             }
+        }
+
+        public void Move(MoveReviewedEventArgs args)
+        {
+            Position = args.NewPosition;
         }
     }
 }
