@@ -23,17 +23,18 @@ namespace DubiousDroidsClassLibrary.Overhead
         public GameState()
         {
             InputManager = new ManageInput();
-            OutputManager = new ManageOutput();
             tileSet = new TileSet();
+            OutputManager = new ManageOutput(tileSet);
             droidGroup = new DroidGroup(new IDroidState[] { 
-                new ReadyState(tileSet, new int[] { 0, 0 }, new int[] { 1, 0 }),
-                new ReadyState(tileSet, new int[] { 2, 3 }, new int[] { 0, 1 })
+                new ReadyState(new int[] { 0, 0 }, new int[] { 1, 0 }),
+                new ReadyState(new int[] { 2, 3 }, new int[] { 0, 1 })
             });
 
             InputManager.InputParsed += droidGroup.OnInputParsed;
             foreach (IDroidState droid in droidGroup.Droids)
             {
                 droid.DroidReportedStatus += OutputManager.OnDroidReportedStatus;
+                droid.TileInfoRequested += tileSet.OnTileInfoRequested;
             }
         }
     }

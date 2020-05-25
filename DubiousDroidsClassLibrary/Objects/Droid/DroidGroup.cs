@@ -23,7 +23,7 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
             {
                 Droids[args.CommandTarget].ReceiveCommand(args);
             }
-            catch
+            catch (IndexOutOfRangeException)
             {
 
             }

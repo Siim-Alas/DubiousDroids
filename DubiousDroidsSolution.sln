@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DubiousDroids", "DubiousDroids\DubiousDroids.csproj", "{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DubiousDroids", "DubiousDroids\DubiousDroids.csproj", "{880AFAE5-B521-4479-B3A3-B1D92E18FFDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DubiousDroidsClassLibrary", "DubiousDroidsClassLibrary\DubiousDroidsClassLibrary.csproj", "{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DubiousDroidsClassLibrary", "DubiousDroidsClassLibrary\DubiousDroidsClassLibrary.csproj", "{6CD66701-6AA1-4EEE-AB31-B6CE9DE63F9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

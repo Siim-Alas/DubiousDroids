@@ -12,15 +12,14 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
 {
     public class ReadyState : IDroidState
     {
-        private readonly ITileSet _tileSet;
-        public ReadyState(ITileSet tileSet, int[] position, int[] directionVector)
+        public ReadyState(int[] position, int[] directionVector)
         {
-            _tileSet = tileSet;
             Position = position;
             DirectionVector = directionVector;
         }
 
         public event DroidReportStatusEventHandler DroidReportedStatus;
+        public event TileInfoRequestedEventHandler TileInfoRequested;
 
         public int[] Position { get; private set; }
         public int[] DirectionVector { get; private set; }
@@ -32,7 +31,6 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
             {
                 case InputParsedEventArgs.InstructionsEnum.peek:
                     DroidReportStatusEventArgs.DirectionEnum direction;
-
                     if (DirectionVector[0] == 0)
                     {
                         direction = (DirectionVector[1] == 1) ? DroidReportStatusEventArgs.DirectionEnum.S : DroidReportStatusEventArgs.DirectionEnum.N;
@@ -41,9 +39,14 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         direction = (DirectionVector[0] == 1) ? DroidReportStatusEventArgs.DirectionEnum.E : DroidReportStatusEventArgs.DirectionEnum.W;
                     }
-
-                    DroidReportedStatus(this, new DroidReportStatusEventArgs(args.CommandTarget, Position, direction));
+                    TileInfoRequestEventArgs tileInfoRequest = new TileInfoRequestEventArgs(
+                                                                   TileInfoRequestEventArgs.OptionsEnum.TileWithNeighbors,
+                                                                   Position, null);
+                    TileInfoRequested(this, tileInfoRequest);
+                    DroidReportedStatus(this, new DroidReportStatusEventArgs(args.CommandTarget, Position, direction, tileInfoRequest.TileWithNeighboursResponse));
                     break;
+
+
                 case InputParsedEventArgs.InstructionsEnum.turn:
                     if (args.Argument == "right")
                     {
@@ -62,6 +65,8 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                         DirectionVector[1] = -1 * previousX;
                     }
                     break;
+
+
                 case InputParsedEventArgs.InstructionsEnum.move:
                     int amount;
                     try
@@ -72,9 +77,12 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         amount = 1;
                     }
-
-                    Position = _tileSet.RequestMove(Position, new int[] { amount * DirectionVector[0], amount * DirectionVector[1] });
-
+                    TileInfoRequestEventArgs moveRequest = new TileInfoRequestEventArgs(
+                                                               TileInfoRequestEventArgs.OptionsEnum.Move,
+                                                               Position, 
+                                                               new int[] { amount * DirectionVector[0], amount * DirectionVector[1] });
+                    TileInfoRequested(this, moveRequest);
+                    Position = moveRequest.Position;
                     break;
                 default:
                     break;
