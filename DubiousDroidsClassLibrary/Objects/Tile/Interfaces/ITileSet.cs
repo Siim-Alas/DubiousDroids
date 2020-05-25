@@ -6,7 +6,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile.Interfaces
 {
     public interface ITileSet
     {
-        ITile[] Tiles { get; }
+        ITile[,] Tiles { get; }
         int[] RequestMove(int[] startPosition, int[] deltaPosition);
     }
 }
