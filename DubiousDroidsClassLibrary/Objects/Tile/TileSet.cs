@@ -24,7 +24,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
         }
         public ITile[,] Tiles { get; private set; }
 
-        public (ITile tile, ITile[] N, ITile[] E, ITile[] S, ITile[] W) GetTileWithNeighbours(int[] position)
+        private (ITile tile, ITile[] N, ITile[] E, ITile[] S, ITile[] W) GetTileWithNeighbours(int[] position)
         {
             // Accessing arrays is [row, column], which, for the sake of convenience, is also [y, x]
             ITile tile = Tiles[position[1], position[0]];
@@ -71,7 +71,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
             return (tile, N.ToArray(), E.ToArray(), S.ToArray(), W.ToArray());
         }
 
-        public int[] RequestMove(int[] startPosition, int[] deltaPosition)
+        private int[] RequestMove(int[] startPosition, int[] deltaPosition)
         {
             int[] newPosition = startPosition;
 
@@ -102,16 +102,13 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
             return newPosition;
         }
 
-        public void OnTileInfoRequested(object source, TileInfoRequestEventArgs args)
+        public void OnTileInfoRequested(object source, TileInfoRequestEventArgs<TileWithNeighboursRequest> args)
         {
-            if (args.Request == TileInfoRequestEventArgs.OptionsEnum.TileWithNeighbors)
-            {
-                args.TileWithNeighboursResponse = GetTileWithNeighbours(args.Position);
-            }
-            else if (args.Request == TileInfoRequestEventArgs.OptionsEnum.Move)
-            {
-                args.Position = RequestMove(args.Position, args.DeltaPosition);
-            }
+            args.Request.Response = GetTileWithNeighbours(args.Request.Position);
+        }
+        public void OnTileInfoRequested(object source, TileInfoRequestEventArgs<MoveRequest> args)
+        {
+            args.Request.Position = RequestMove(args.Request.Position, args.Request.DeltaPosition);
         }
     }
 }

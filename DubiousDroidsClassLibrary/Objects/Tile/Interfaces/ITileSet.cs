@@ -4,12 +4,11 @@ using System.Text;
 
 namespace DubiousDroidsClassLibrary.Objects.Tile.Interfaces
 {
-    public delegate void TileInfoRequestedEventHandler(object source, TileInfoRequestEventArgs args);
+    public delegate void TileInfoRequestedEventHandler<T>(object source, TileInfoRequestEventArgs<T> args);
     public interface ITileSet
     {
         ITile[,] Tiles { get; }
-        (ITile tile, ITile[] N, ITile[] E, ITile[] S, ITile[] W) GetTileWithNeighbours(int[] position);
-        int[] RequestMove(int[] startPosition, int[] deltaPosition);
-        void OnTileInfoRequested(object source, TileInfoRequestEventArgs args);
+        void OnTileInfoRequested(object source, TileInfoRequestEventArgs<TileWithNeighboursRequest> args);
+        void OnTileInfoRequested(object source, TileInfoRequestEventArgs<MoveRequest> args);
     }
 }

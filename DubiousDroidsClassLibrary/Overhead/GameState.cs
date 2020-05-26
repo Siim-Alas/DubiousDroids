@@ -34,7 +34,8 @@ namespace DubiousDroidsClassLibrary.Overhead
             foreach (IDroidState droid in droidGroup.Droids)
             {
                 droid.DroidReportedStatus += OutputManager.OnDroidReportedStatus;
-                droid.TileInfoRequested += tileSet.OnTileInfoRequested;
+                droid.TileWithNeighboursRequested += tileSet.OnTileInfoRequested;
+                droid.MoveRequested += tileSet.OnTileInfoRequested;
             }
         }
     }

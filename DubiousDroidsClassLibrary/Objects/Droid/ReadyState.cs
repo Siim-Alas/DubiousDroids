@@ -19,7 +19,8 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
         }
 
         public event DroidReportStatusEventHandler DroidReportedStatus;
-        public event TileInfoRequestedEventHandler TileInfoRequested;
+        public event TileInfoRequestedEventHandler<TileWithNeighboursRequest> TileWithNeighboursRequested;
+        public event TileInfoRequestedEventHandler<MoveRequest> MoveRequested;
 
         public int[] Position { get; private set; }
         public int[] DirectionVector { get; private set; }
@@ -39,11 +40,10 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         direction = (DirectionVector[0] == 1) ? DroidReportStatusEventArgs.DirectionEnum.E : DroidReportStatusEventArgs.DirectionEnum.W;
                     }
-                    TileInfoRequestEventArgs tileInfoRequest = new TileInfoRequestEventArgs(
-                                                                   TileInfoRequestEventArgs.OptionsEnum.TileWithNeighbors,
-                                                                   Position, null);
-                    TileInfoRequested(this, tileInfoRequest);
-                    DroidReportedStatus(this, new DroidReportStatusEventArgs(args.CommandTarget, Position, direction, tileInfoRequest.TileWithNeighboursResponse));
+
+                    TileWithNeighboursRequest infoRequest = new TileWithNeighboursRequest(Position);
+                    TileWithNeighboursRequested(this, new TileInfoRequestEventArgs<TileWithNeighboursRequest>(infoRequest));
+                    DroidReportedStatus(this, new DroidReportStatusEventArgs(args.CommandTarget, Position, direction, infoRequest.Response));
                     break;
 
 
@@ -77,13 +77,13 @@ namespace DubiousDroidsClassLibrary.Objects.Droid
                     {
                         amount = 1;
                     }
-                    TileInfoRequestEventArgs moveRequest = new TileInfoRequestEventArgs(
-                                                               TileInfoRequestEventArgs.OptionsEnum.Move,
-                                                               Position, 
-                                                               new int[] { amount * DirectionVector[0], amount * DirectionVector[1] });
-                    TileInfoRequested(this, moveRequest);
+                    MoveRequest moveRequest = new MoveRequest(Position,
+                                                              new int[] { amount * DirectionVector[0], amount * DirectionVector[1] });
+                    MoveRequested(this, new TileInfoRequestEventArgs<MoveRequest>(moveRequest));
                     Position = moveRequest.Position;
                     break;
+
+
                 default:
                     break;
             }

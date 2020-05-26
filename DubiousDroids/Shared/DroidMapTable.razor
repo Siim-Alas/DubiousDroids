@@ -7,7 +7,7 @@
             @for (int j = 0; j < GS.OutputManager.DisplayedTiles.GetLength(1); j++)
             {
                 <td style="border:solid;height:30px;width:50px;">
-                    <p @bind="Tiles[i, j]" @bind:event="onchange"></p>
+                    <p @bind="GS.OutputManager.DisplayedTiles[i, j]" @bind:event="onchange"></p>
                 </td>
             }
         </tr>
@@ -17,7 +17,4 @@
 @code {
     [Parameter]
     public DubiousDroidsClassLibrary.Overhead.Interfaces.IGameState GS { get; set; }
-
-    private string[,] Tiles { get { return GS.OutputManager.DisplayedTiles; } }
-
 }

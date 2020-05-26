@@ -11,7 +11,8 @@ namespace DubiousDroidsClassLibrary.Objects.Droid.Interfaces
     public interface IDroidState
     {
         event DroidReportStatusEventHandler DroidReportedStatus;
-        event TileInfoRequestedEventHandler TileInfoRequested;
+        event TileInfoRequestedEventHandler<TileWithNeighboursRequest> TileWithNeighboursRequested;
+        event TileInfoRequestedEventHandler<MoveRequest> MoveRequested;
         int[] Position { get; }
         void ReceiveCommand(InputParsedEventArgs args);
     }

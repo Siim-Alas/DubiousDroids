@@ -5,26 +5,33 @@ using System.Text;
 
 namespace DubiousDroidsClassLibrary.Objects.Tile
 {
-    public class TileInfoRequestEventArgs : EventArgs
+    public class TileWithNeighboursRequest
     {
-        public TileInfoRequestEventArgs(OptionsEnum request, int[] position, int[] deltaPosition)
+        public TileWithNeighboursRequest(int[] position)
         {
-            Request = request;
+            Position = position;
+        }
+        public int[] Position { get; private set; }
+        public (ITile tile, ITile[] N, ITile[] E, ITile[] S, ITile[] W) Response { get; set; }
+    }
+    public class MoveRequest
+    {
+        public MoveRequest(int[] position, int[] deltaPosition)
+        {
             Position = position;
             DeltaPosition = deltaPosition;
         }
-        public enum OptionsEnum
-        {
-            TileWithNeighbors,
-            Move
-        }
-        public OptionsEnum Request { get; private set; }
         public int[] Position { get; set; }
+        public int[] DeltaPosition { get; private set; }
+    }
 
-        // TileWithNeighbours
-        public (ITile tile, ITile[] N, ITile[] E, ITile[] S, ITile[] W) TileWithNeighboursResponse { get; set; }
+    public class TileInfoRequestEventArgs<T> : EventArgs
+    {
+        public TileInfoRequestEventArgs(T request)
+        {
+            Request = request;
+        }
 
-        // Move
-        public int[] DeltaPosition { get; set; }
+        public T Request { get; set; }
     }
 }
