@@ -17,7 +17,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
                 {st, st, null, null, null },
                 {null, null, null, null, null },
                 {null, null, null, st, null },
-                {null, null, null, st, null },
+                {null, null, st, st, null },
                 {null, st, st, st, null },
                 {null, null, null, null, null }
             };
@@ -43,7 +43,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
             y = position[1];
             try
             {
-                while (Tiles[--y, x] != null)
+                while (Tiles[++y, x] != null)
                 {
                     S.Add(Tiles[y, x]);
                 }
