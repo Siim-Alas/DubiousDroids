@@ -6,8 +6,8 @@
         <tr>
             @for (int j = 0; j < GS.OutputManager.DisplayedTiles.GetLength(1); j++)
             {
-                <td style="border:solid;height:30px;width:50px;">
-                    <p @bind="GS.OutputManager.DisplayedTiles[i, j]" @bind:event="onchange"></p>
+                <td style="border:solid;height:50px;width:100px;">
+                    <p>@GS.OutputManager.DisplayedTiles[i, j]</p>
                 </td>
             }
         </tr>
@@ -17,4 +17,15 @@
 @code {
     [Parameter]
     public DubiousDroidsClassLibrary.Overhead.Interfaces.IGameState GS { get; set; }
+
+    public void OnOutputManagerUpdated(object source, EventArgs args)
+    {
+        this.StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        GS.OutputManager.OutputManagerUpdated += OnOutputManagerUpdated;
+    }
 }

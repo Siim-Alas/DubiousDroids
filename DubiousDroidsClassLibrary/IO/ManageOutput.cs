@@ -17,6 +17,8 @@ namespace DubiousDroidsClassLibrary.IO
             DisplayedTiles = new string[tileSet.Tiles.GetLength(0), tileSet.Tiles.GetLength(1)];
         }
 
+        public event OutputManagerUpdatedEventHandler OutputManagerUpdated;
+
         public List<DroidReportStatusEventArgs> CurrentDroidReports { get; private set; }
         public string[,] DisplayedTiles { get; private set; }
 
@@ -25,14 +27,8 @@ namespace DubiousDroidsClassLibrary.IO
             Console.WriteLine($"droid {args.ID} reported position ({string.Join(';', args.Position)}) facing {args.Direction} ");
             CurrentDroidReports.Add(args);
             DisplayedTiles[args.Position[1], args.Position[0]] = "droid";
-            for (int i = 0; i < DisplayedTiles.GetLength(0); i++)
-            {
-                for (int j = 0; j < DisplayedTiles.GetLength(1); j++)
-                {
-                    Console.Write(DisplayedTiles[i, j] + "\t");
-                }
-                Console.WriteLine();
-            }
+
+            OutputManagerUpdated(this, EventArgs.Empty);
         }
     }
 }
