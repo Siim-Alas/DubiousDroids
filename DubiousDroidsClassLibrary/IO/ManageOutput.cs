@@ -29,22 +29,22 @@ namespace DubiousDroidsClassLibrary.IO
 
             foreach (ITile t in args.TileInfo.N)
             {
-                DisplayedTiles[--y, x] = "st";
+                DisplayedTiles[--y, x] = t.JunctionType.ToString();
             }
             y = args.Position[1];
             foreach (ITile t in args.TileInfo.S)
             {
-                DisplayedTiles[++y, x] = "st";
+                DisplayedTiles[++y, x] = t.JunctionType.ToString();
             }
             y = args.Position[1];
             foreach (ITile t in args.TileInfo.E)
             {
-                DisplayedTiles[y, ++x] = "st";
+                DisplayedTiles[y, ++x] = t.JunctionType.ToString();
             }
             x = args.Position[0];
             foreach (ITile t in args.TileInfo.W)
             {
-                DisplayedTiles[y, --x] = "st";
+                DisplayedTiles[y, --x] = t.JunctionType.ToString();
             }
         }
 
@@ -52,7 +52,7 @@ namespace DubiousDroidsClassLibrary.IO
         {
             Console.WriteLine($"droid {args.ID} reported position ({string.Join(';', args.Position)}) facing {args.Direction} ");
             CurrentDroidReports.Add(args);
-            DisplayedTiles[args.Position[1], args.Position[0]] = "droid";
+            DisplayedTiles[args.Position[1], args.Position[0]] = args.Direction.ToString();
 
             AddTileInfoToDisplayedTiles(args);
 

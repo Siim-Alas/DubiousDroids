@@ -10,17 +10,24 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
     public class TileSet : ITileSet
     {
         private readonly StandardTile st = new StandardTile();
+        private readonly JunctionTile wne = new JunctionTile(JunctionTile.JunctionTypeEnum.WNE);
+
+        private readonly List<ITile> passableTiles = new List<ITile>();
+
         public TileSet()
         {
             Tiles = new ITile[,]
             {
                 {st, st, null, null, null },
                 {null, null, null, null, null },
-                {null, null, null, st, null },
-                {null, null, st, st, null },
-                {null, st, st, st, null },
+                {null, null, st, null, null },
+                {null, null, st, null, null },
+                {null, st, wne, st, null },
                 {null, null, null, null, null }
             };
+
+            passableTiles.Add(st);
+            passableTiles.Add(wne);
         }
         public ITile[,] Tiles { get; private set; }
 
@@ -78,7 +85,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
             // Accessing arrays is [row, column], which, for the sake of convenience, is also [y, x]
             for (int i = 0; i < Math.Abs(deltaPosition[0]); i++)
             {
-                if (Tiles[newPosition[1], newPosition[0] + Math.Sign(deltaPosition[0])] == st)
+                if (passableTiles.Contains(Tiles[newPosition[1], newPosition[0] + Math.Sign(deltaPosition[0])]))
                 {
                     newPosition[0] += Math.Sign(deltaPosition[0]);
                 }
@@ -89,7 +96,7 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
             }
             for (int j = 0; j < Math.Abs(deltaPosition[1]); j++)
             {
-                if (Tiles[newPosition[1] + Math.Sign(deltaPosition[1]), newPosition[0]] == st)
+                if (passableTiles.Contains(Tiles[newPosition[1] + Math.Sign(deltaPosition[1]), newPosition[0]]))
                 {
                     newPosition[1] += Math.Sign(deltaPosition[1]);
                 }
