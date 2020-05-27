@@ -9,6 +9,7 @@ namespace DubiousDroidsClassLibrary.IO.Interfaces
     public interface IManageOutput
     {
         event OutputManagerUpdatedEventHandler OutputManagerUpdated;
+        List<DroidReportStatusEventArgs> CurrentDroidReports { get; }
         string[,] DisplayedTiles { get; }
         void OnDroidReportedStatus(object source, DroidReportStatusEventArgs args);
     }

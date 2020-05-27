@@ -3,3 +3,8 @@
     color: white;
     white-space: pre-line;
 }
+
+.command-console {
+    overflow-y: scroll;
+    height: 75vh
+}

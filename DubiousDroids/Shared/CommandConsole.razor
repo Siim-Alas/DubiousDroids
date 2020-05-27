@@ -1,5 +1,5 @@
 ﻿
-<div class="bg-dark">
+<div class="bg-dark command-console">
     <h3>CommandConsole</h3>
     <p class="console-log">@Text</p>
 
@@ -17,10 +17,21 @@
     {
         if (args.Key == "Enter")
         {
+            Text += $"\ncommand {DateTime.Now.ToString("HH:mm:ss")}  >  {CurrentLine}";
             GS.InputManager.ParseTextInput(CurrentLine);
-
-            Text += $"\n{CurrentLine}";
             CurrentLine = "";
         }
+    }
+
+    public void OnOutputManagerUpdated(object source, EventArgs args)
+    {
+        var signal = GS.OutputManager.CurrentDroidReports.Last();
+        Text += $"\nsignal {DateTime.Now.ToString("HH:mm:ss")}  >  droid {signal.ID}, position ({string.Join(';', signal.Position)}), facing {signal.Direction}";
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        GS.OutputManager.OutputManagerUpdated += OnOutputManagerUpdated;
     }
 }
