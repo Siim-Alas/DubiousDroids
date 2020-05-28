@@ -9,8 +9,8 @@ namespace DubiousDroidsClassLibrary.Objects.Tile
 {
     public class TileSet : ITileSet
     {
-        private readonly StandardTile st = new StandardTile();
-        private readonly JunctionTile wne = new JunctionTile(JunctionTile.JunctionTypeEnum.WNE);
+        private readonly StandardTile st = new StandardTile(StandardTile.JunctionTypeEnum.None);
+        private readonly StandardTile wne = new StandardTile(StandardTile.JunctionTypeEnum.WNE);
 
         private readonly List<ITile> passableTiles = new List<ITile>();
 
