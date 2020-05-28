@@ -1,9 +1,13 @@
 ﻿
-<div class="bg-dark command-console">
-    <h3>CommandConsole</h3>
+<div class="command-console">
     <p class="console-log">@Text</p>
 
-    <input type="text" @bind="CurrentLine" @bind:event="oninput" @onkeypress="OnKeyPress" />
+    <input type="text" 
+           class="console-input" 
+           @bind="CurrentLine" 
+           @bind:event="oninput" 
+           @onkeypress="OnKeyPress" 
+           autofocus />
 </div>
 
 @code {
