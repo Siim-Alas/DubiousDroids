@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DubiousDroidsClassLibrary.IO
 {
@@ -21,11 +22,19 @@ namespace DubiousDroidsClassLibrary.IO
                     {
                         int commandTarget = Convert.ToInt32(inputArray[0]);
 
-                        InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, (inputArray.Length > 2) ? inputArray[2] : ""));
+                        Task.Run(async delegate
+                        {
+                            await Task.Delay(1000);
+                            InputParsed(this, new InputParsedEventArgs(commandTarget, instructions, (inputArray.Length > 2) ? inputArray[2] : ""));
+                        });
                     }
                 }
             }
-            catch
+            catch (Exception ex) when 
+            (ex is ArgumentException || 
+            ex is ArgumentNullException || 
+            ex is FormatException || 
+            ex is OverflowException)
             {
 
             }
